@@ -1,0 +1,73 @@
+body{
+font-family:arial,sans-serif;
+}
+#mid{
+width:70%;
+float:right;
+position:relative;
+text-align:left;
+}
+#left{
+width:30%;
+float:left;
+}
+.th{
+font-weight:bold;
+width:120px;
+text-align:left;
+font-size:16px;
+}
+.spacer {
+  height: 18px;
+  margin: 0;
+}
+#add-mail{
+	height:25px;
+	width:250px;
+}
+.glyphicon{
+cursor:pointer;
+margin-left:8px;
+float:right;
+margin-right:2px;
+}
+#header{
+	background-color:#F1F1F1;
+	padding:20px;
+	padding-left:40px;
+	margin-bottom:50px;
+	border:#e5e5e5 1px solid;
+	
+}
+.container-fluid{
+	padding:0px;
+}
+h3,.note{
+	margin:2px;
+	margin-left:10px;
+}
+.icon{
+	width:50px;
+	background: url(images/e-mail.svg);
+	background-color:#f1f1f1;
+	background-size: 50px 50px;
+	background-repeat: no-repeat;
+}
+#followed-senders{
+font-weight:800px;
+margin-top:30px;
+}
+.followed-mail{
+font-size:16px;
+margin-bottom:3px;
+margin-top:2px;
+background-color:#f1f1f1;
+border:#e9e9e9 1px solid;
+border-radius:5px;
+width:300px;
+padding:2px;
+padding-left:5px;
+}
+#followed-senders-head{
+font-weight:bold;
+}

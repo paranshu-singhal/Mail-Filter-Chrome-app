@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Options</title>
+
+<script src="jquery.js"></script>
+<script src="options.js"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+<!-- Latest compiled JavaScript -->
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="options.css">
+ </head>
+ <body>
+ <div class="container-fluid">
+ <div id="header">
+	    <table width="100%"><tbody>
+	      	<tr>
+		        <td rowspan="2" class="icon"></td>
+		        <td class="title"><span><h3>Mail Follow<h3></span></td>
+		     <td rowspan="2" class="links">
+<!--		          <a href="https://addons.mozilla.org/en-US/firefox/addon/coder-calendar/"><img src="images/firefox.png"></a> -->
+<!--		          <a href="https://chrome.google.com/webstore/detail/coders-calendar/bageaffklfkikjigoclfgengklfnidll"><img src="images/chrome.png"></a>-->
+		          <a href="https://github.com/nishanthvijayan/CoderCalendar"><img src="images/github.png"></a>
+		        </td>
+	      	</tr>
+	      	<tr>
+	        	<td class="short"><span class="note">Filter your mails according to your preferances.</span></td>
+	      	</tr>
+		</tbody></table>
+  	</div>
+ <span id="left"></span>
+ <span id="mid">
+ <table>
+ <tbody id="tbody">
+ <tr>
+ <td class="th">Preferances: 
+   <p class="spacer"></p>
+ </td>
+  </tr>
+ <tr>
+ <td>
+<label class="checkbox-inline"> <input id='important' type="checkbox"><span style="padding:10px">Important Mails Only</span></input></label>
+  <p class="spacer"></p>
+ </td>
+ </tr>
+ <tr>
+ <td>
+<label class="checkbox-inline"><input type="checkbox" id='unread'><span style="padding:10px">Include Unread Mails</span></label>
+ <p class="spacer"></p>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label class="checkbox-inline"><input id='read' type="checkbox"><span style="padding:10px">Include Read Mails</span></input></label>
+ <p class="spacer"></p>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label class="checkbox-inline"><input id='social' type="checkbox"><span style="padding:10px">Exclude Social Mails</span></input></label>
+ <p class="spacer"></p>
+ </td>
+ </tr>
+ <tr>
+ <td>
+ <label class="checkbox-inline"><input id='promotional' type="checkbox"><span style="padding:10px">Exclude Promotional Mails</span></input></label>
+ <p class="spacer"></p>
+ <p class="spacer"></p>
+ </td>
+ </tr>
+ <tr>
+<td class="th"> 
+Follow Senders
+<p class="spacer"></p>
+</td>
+<td>
+<input type="email" name="email" placeholder="Enter Email" id="add-mail"></input>
+<span class="glyphicon glyphicon-plus" id="add"></span>
+<p class="spacer"></p>
+</td>
+</tr>
+ </tbody>
+ </table>
+ <div id='followed-senders'>
+ <div id="followed-senders-head" class="followed-mail">Senders Follow List</div>
+ <!-- <span class='mail-saved'>paranshu.singhal@gmail.com</span> -->
+ </div>
+ </span>
+ </div>
+ </body>
+ </html>
