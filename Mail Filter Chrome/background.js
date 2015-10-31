@@ -167,7 +167,7 @@ listMessages();
  });
 $("body").on('click',"#code", function(){
 //alert('code');	
-
+chrome.tabs.create({ url:"https://github.com/paranshu-singhal/Mail-Filter-Chrome-app" });
 });
  });
 
