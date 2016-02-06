@@ -37,7 +37,6 @@ function loadGmailApi() {
         gapi.client.load('gmail', 'v1', listMessages);
  }	
 function listMessages(userId,callback) {
-
 //	alert('list');
 	var query='';
 	if(localStorage.important=="true") query+='is:important ';
