@@ -1,46 +1,45 @@
-//oauth2 auth
-chrome.identity.getAuthToken(
-	{'interactive': true},
-	function(){
-	  //load Google's javascript client libraries
-		window.gapi_onload = authorize;
-		loadScript('https://apis.google.com/js/client.js');
-	}
-);
+var CLIENT_ID = '831378806747-lok4aolgabs3mpm0gdbsbm7mtonapde1.apps.googleusercontent.com';
+var SCOPES = ['https://www.googleapis.com/auth/gmail.readonly'];
+if(!localStorage.important)localStorage.important = 'false';
+if(!localStorage.unread)localStorage.unread = 'true';
+if(!localStorage.read)localStorage.read = 'true';
+if(!localStorage.social)localStorage.social = 'true';
+if(!localStorage.promotional)localStorage.promotional = 'true';
+if(!localStorage.mails || localStorage.mails.length==0)localStorage.mails = '["paranshu.singhal@gmail.com"]';
 
-function loadScript(url){
-  var request = new XMLHttpRequest();
-
-	request.onreadystatechange = function(){
-		if(request.readyState !== 4) {
-			return;
-		}
-
-		if(request.status !== 200){
-			return;
-		}
-
-    eval(request.responseText);
-	};
-
-	request.open('GET', url);
-	request.send();
+function checkAuth() {
+        gapi.auth.authorize(
+          {'client_id': CLIENT_ID, 'scope': SCOPES.join(' '), 'immediate': true}, 
+			handleAuthResult);
+		return true;	
+ }
+function handleAuthClick(event) {
+        gapi.auth.authorize(
+          {'client_id': CLIENT_ID, 'scope': SCOPES.join(' '), 'immediate':true},
+          handleAuthResult);
+		return true;
 }
-
-function authorize(){
-  gapi.auth.authorize(
-		{
-			client_id: '752876804494-89290mlvi975ls09fp6afhlh5mfgu52g.apps.googleusercontent.com',
-			immediate: true,
-			scope: 'https://www.googleapis.com/auth/gmail.readonly'
-		},
-		function(){
-		  gapi.client.load('gmail', 'v1', listMessages);
-		}
-	);
-	}
-
+function handleAuthResult(authResult) {
+		
+        
+	//	alert(authResult.error);
+		if (authResult && !authResult.error) {
+	//	   alert('handle1');
+          // Hide auth UI, then load client library.
+         loadGmailApi();
+        } else {
+		  alert('handle2');
+          // Show auth UI, allowing the user to initiate authorization by clicking authorize button.
+          befor_authorize.style.display = 'inline';
+        }
+}
+function loadGmailApi() {
+        gapi.client.load('gmail', 'v1', listMessages);
+ }	
 function listMessages(userId,callback) {
+document.getElementById('before-load').style.display = 'none';
+document.getElementById('after-load').style.display = 'inline';
+//	alert('list');
 	var query='';
 	if(localStorage.important=="true") query+='is:important ';
 	if(localStorage.unread=="true" && localStorage.read!="true") query+='is:unread ';
@@ -58,22 +57,27 @@ function listMessages(userId,callback) {
 	if(mails.length>0) query+='from:' + mails[mails.length-1];
 //	alert(query);
 	}
+
+  //  alert(query);
 	var getPageOfMessages = function(request, result) {
     request.execute(function(resp) {
+		
       result = result.concat(resp.messages);
       var nextPageToken = resp.nextPageToken;
 
 	  if (nextPageToken) {
         request = gapi.client.gmail.users.messages.list({
-          'userId': userId,
+          'userId': 'me',
           'pageToken': nextPageToken,
 		  'q':query,
-//		  'format','metadata',
+
 		});
         getPageOfMessages(request, result);
-      } else {
+      } 
+	  
+	  else {
         for (i = 0; i < result.length; i++) {
-              getmessage('me',result[i].id,[]);
+			getmessage('me',result[i].id,[]);
             }
       }
     });
@@ -85,6 +89,7 @@ function listMessages(userId,callback) {
   getPageOfMessages(initialRequest, []);
 }
 function getmessage(userId,msgId,callback){
+//alert('getmsg');
 var request=gapi.client.gmail.users.messages.get({
 'userId':userId,
 'id':msgId,
@@ -109,15 +114,20 @@ else if(dat[i].name=="Date"){
 }
 var ans='{'+'"subject": '+'"'+sub+'",'+'"from": '+'"'+from+'",'+'"date": '+'"'+date+'"}';
 var ans2=JSON.parse(ans);
-$('#before-load').hide();
-$('#after-load').show();
 appendPre(ans2,data.id);
 });
 };
 function appendPre(message,msgId) {
+document.getElementById('before-load').style.display = 'none';
+document.getElementById('after-load').style.display = 'inline';
+
   var pre = document.getElementById('output');
+  
   var l1=document.createElement('span');
-  l1.id=msgId;l1.className="info";
+  l1.id=msgId;
+  var l2=document.createElement('span');
+  l2.className="info";
+  
   var txtfrom = document.createTextNode('From: '+message.from + '\n');
   var txtdate = document.createTextNode('Date: '+message.date + '\n');
   var txtsub = document.createTextNode('Subject: '+message.subject + '\n');
@@ -125,25 +135,33 @@ function appendPre(message,msgId) {
   a.href="#";a.id="Delete";
   a.appendChild(document.createTextNode('Delete'));
   l1.appendChild(a);
-  l1.appendChild(txtfrom);
-  l1.appendChild(txtdate);
-  l1.appendChild(document.createElement('br'));
-  l1.appendChild(txtsub);
+  l2.appendChild(txtfrom);
+  l2.appendChild(txtdate);
+  l2.appendChild(document.createElement('br'));
+  l2.appendChild(txtsub);
  // l1.appendChild(document.createElement('br'));
+  l1.appendChild(l2);
   l1.appendChild(document.createElement('hr'));
   pre.appendChild(l1);
 }
 $(document).ready(function(){	
 	
- $("body").on('click','#Delete', function(){
-var msgid=$(this).parent().attr("id");
-	var request = gapi.client.gmail.users.messages.delete({
+ $("body").on('click','#Delete', function(event){
+ event.preventDefault();
+ var node = $(this).parent();
+ var msgid= node.attr("id");
+ 
+var request = gapi.client.gmail.users.messages.delete({
     'userId': 'me',
     'id': msgid,
   });
   request.execute(
     function(resp) {
-		alert('msg Deleted');
+		if(resp.code==200){
+		 document.getElementById('output').removeChild(document.getElementById(msgid)); }
+		else{
+			alert(resp.message);
+			}
 	});
 });
  $("body").on('click',"#options", function(){

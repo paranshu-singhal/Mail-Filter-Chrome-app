@@ -1,7 +1,7 @@
 {
-"manifest_version": 2,
+  "manifest_version": 2,
 
-"name": "Mail Filter",
+  "name": "Mail Filter",
   "short_name": "Mails Filter",
   "description": "Filter your e-mails according to your preferances.",
   "version": "1.0",
@@ -13,9 +13,8 @@
 	"https://www.googleapis.com/",
 	"https://accounts.google.com/"
   ],
-  
-  "oauth2": {
-    "client_id": "752876804494-89290mlvi975ls09fp6afhlh5mfgu52g.apps.googleusercontent.com",
+ "oauth2": {
+    "client_id": "831378806747-lok4aolgabs3mpm0gdbsbm7mtonapde1.apps.googleusercontent.com",
     "scopes": [
      "https://www.googleapis.com/auth/gmail.readonly"
     ]
